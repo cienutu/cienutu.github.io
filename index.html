@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="fondoo.png">
+<title>Cien años contador</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        color:white;
+        background-color: black;
+        position: relative;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #countdown-container {
+        position: relative;
+        z-index: 1;
+    }
+
+    #countdown {
+        font-size: 2rem;
+        margin-top: 20px;
+    }
+
+    #countdown span {
+        font-size: 0.8em;
+        vertical-align: super;
+    }
+
+    #target-date {
+        font-size: 1.5rem;
+        margin-top: 10px;
+    }
+
+    #background-image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 0;
+        opacity: 0.5;
+    }
+
+    #credit {
+        position: absolute;
+        font-weight: bold;
+        bottom: 10px;
+        right: 10px;
+        font-size: 0.8rem;
+        text-align: right;
+        width: 100%;
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    #qr-codigo {
+        position: absolute;
+        bottom: 0.7vh;
+        left: 0.7vw;
+        border-radius: 30px;
+    }
+
+    #qr-codigo img {
+        width: 8vw;
+        height: 8vw;
+    }
+
+    @media (max-width: 315px) {
+        #qr-codigo {
+            position: absolute;
+            bottom: 3vh;
+            left: 5vw;
+            border-radius: 30px;
+        }
+
+        #qr-codigo img {
+            width: 20vw;
+            height: 20vw;
+        }
+
+        #credit {
+            position: absolute;
+            font-weight: bold;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.8rem;
+            text-align: right;
+            width: 100%;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        body {
+            background-color: black;
+            overflow-x: hidden; 
+        }
+
+        #countdown {
+            font-size: 1.5rem;
+            margin-top: 10px;
+        }
+
+        #countdown span {
+            font-size: 0.8em;
+        }
+
+        #target-date {
+            font-size: 1rem; 
+            margin-top: 5px;
+        }
+
+        #background-image {
+            display: none;
+        }
+    }
+
+</style>
+</head>
+<body>
+<div id="countdown-container">
+    <h1>Faltan...</h1>
+    <div id="countdown"></div>
+    <div id="target-date">para...</div>
+</div>
+<a id="qr-codigo" href="info.html" target="_blank"><img src="qr.png" alt="qr-codigo"></a>
+<img id="background-image" src="fondoo.png">
+<div id="credit">Por Iñaki Barreda y Santiago Beasley 1º MD</div>
+
+<script>
+    var countDownDate = new Date("Sep 29, 2024 00:00:00").getTime();
+
+    var x = setInterval(function() {
+
+        var now = new Date().getTime();
+
+        var distance = countDownDate - now;
+
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
+        + minutes + "m <span>" + seconds + "s</span>";
+
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("countdown").innerHTML = "Ya pasó!";
+        }
+    }, 1000);
+</script>
+</body>
+</html>

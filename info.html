@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="fondoo.png">
+<title>Información cien años</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        color:white;
+        background-color: black;
+        position: relative;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #countdown-container {
+        position: relative;
+        z-index: 1;
+        margin-bottom: 20px;
+    }
+
+    #countdown {
+        font-size: 1.5rem; 
+        margin-top: 10px;
+    }
+
+    #countdown span {
+        font-size: 0.8em;
+        vertical-align: super;
+    }
+
+    #target-date {
+        font-size: 1rem;
+        margin-top: 5px;
+    }
+
+    #background-image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 0;
+        opacity: 0.5;
+    }
+
+    #info-image {
+        position: absolute;
+        bottom: 25px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 70px;
+        cursor: pointer;
+        z-index: 1;
+        border-radius: 10px;
+    }
+
+    #info-preview {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 2;
+        cursor: zoom-out;
+    }
+
+    #info-preview img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: 10px;
+    }
+
+    #credit {
+        position: absolute;
+        font-weight: bold;
+        bottom: 10px;
+        right: 10px;
+        font-size: 0.8rem;
+        text-align: right;
+        width: 100%;
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    @media (max-width: 315px) {
+        #credit {
+        color: rgba(255, 255, 255, 0.5);
+        position: absolute;
+        font-weight: bold;
+        bottom: 3px;
+        right: 10px;
+        font-size: 0.8rem;
+        text-align: right;
+        width: 100%;
+    }
+
+
+        #info-image {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 70px;
+        cursor: pointer;
+        z-index: 1;
+        border-radius: 10px;
+    }
+
+    #info-preview {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 2;
+        cursor: zoom-out;
+    }
+
+    #info-preview img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: 10px;
+    }        
+        
+        body {
+            background-color: black;
+            overflow-x: hidden; 
+        }
+
+        #countdown {
+            font-size: 1.5rem;
+            margin-top: 10px;
+        }
+
+        #countdown span {
+            font-size: 0.8em;
+        }
+
+        #target-date {
+            font-size: 1rem; 
+            margin-top: 5px;
+        }
+
+        #background-image {
+            display: none;
+        }
+    }
+
+</style>
+</head>
+<body>
+<div id="countdown-container">
+    <h1>Faltan...</h1>
+    <div id="countdown"></div>
+    <div id="target-date">para...</div>
+</div>
+<img id="background-image" src="fondoo.png">
+<img id="info-image" src="info.jpg">
+
+<div id="info-preview">
+    <img src="info.jpg" alt="Info" id="info-full">
+</div>
+<div id="credit">Por Iñaki Barreda y Santiago Beasley 1º MD</div>
+
+<script>
+    var countDownDate = new Date("Sep 29, 2024 00:00:00").getTime();
+
+    var x = setInterval(function() {
+
+        var now = new Date().getTime();
+
+        var distance = countDownDate - now;
+
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
+        + minutes + "m <span>" + seconds + "s</span>";
+
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("countdown").innerHTML = "Ya pasó!";
+        }
+    }, 1000);
+
+    var infoImage = document.getElementById("info-image");
+    var infoPreview = document.getElementById("info-preview");
+    var infoFull = document.getElementById("info-full");
+
+    infoImage.addEventListener("click", function() {
+        infoPreview.style.display = "block";
+    });
+
+    infoPreview.addEventListener("click", function() {
+        infoPreview.style.display = "none";
+    });
+</script>
+</body>
+</html>
