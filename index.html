@@ -4,17 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/png" href="fondoo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 <title>Cien años contador</title>
 <style>
     body {
-        font-family: Arial, sans-serif;
+        font-family: 'Montserrat', sans-serif;
         text-align: center;
         color:white;
         background-color: black;
         position: relative;
-        height: 100vh;
+        min-height: 100vh;
         margin: 0;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
     }
@@ -22,6 +26,7 @@
     #countdown-container {
         position: relative;
         z-index: 1;
+        margin-bottom: 20px;
     }
 
     #countdown span {
@@ -32,14 +37,39 @@
 #countdown,
 h1,
 #target-date {
-    font-size: 3.5rem;
-    color: #f0f0f0; /* Color gris claro */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Sombra ligera */
-    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.8); /* Contorno blanco suavizado */
-    text-stroke: 1.5px rgba(255, 255, 255, 0.8); /* Contorno blanco suavizado */
+    font-size: 2.5rem;
+    color: white;
+    text-shadow: none;
+    -webkit-text-stroke: none;
+    text-stroke: none;
 }
 
+#countdown span {
+    font-size: 1em;
+    vertical-align: baseline;
+}
 
+#gallery {
+    position: absolute;
+    bottom: 20px;
+    padding: 20px;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.gallery-image {
+    max-width: 120px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-image:hover {
+    transform: scale(1.02);
+}
 
     #background-image {
         position: absolute;
@@ -53,74 +83,141 @@ h1,
     #credit {
         position: absolute;
         font-weight: bold;
-        bottom: 10px;
+        bottom: 20px;
         right: 10px;
         font-size: 0.8rem;
         text-align: right;
         width: 100%;
         color: rgba(255, 255, 255, 0.5);
+        padding-right: 20px;
     }
 
-    #qr-codigo {
-        position: absolute;
-        bottom: 0.7vh;
-        left: 0.7vw;
-        border-radius: 30px;
-    }
-
-    #qr-codigo img {
-        width: 8vw;
-        height: 8vw;
-    }
-
-    @media (max-width: 315px) {
-        #qr-codigo {
-            position: absolute;
-            bottom: 3vh;
-            left: 5vw;
-            border-radius: 30px;
+    @media (max-width: 768px) {
+        #countdown,
+        h1,
+        #target-date {
+            font-size: 2.5rem;
         }
 
-        #qr-codigo img {
-            width: 20vw;
-            height: 20vw;
-        }
-
-        #credit {
-            position: absolute;
-            font-weight: bold;
-            bottom: 10px;
-            right: 10px;
-            font-size: 0.8rem;
-            text-align: right;
+        #background-image {
             width: 100%;
-            color: rgba(255, 255, 255, 0.5);
+            height: auto;
+        }
+    }
+
+    @media (max-width: 480px) {
+        #countdown,
+        h1,
+        #target-date {
+            font-size: 2rem;
         }
 
-        body {
-            background-color: black;
-            overflow-x: hidden; 
+        #countdown-container {
+            padding: 20px;
         }
+    }
 
-        #countdown {
+    @media (max-width: 320px) {
+        #countdown,
+        h1,
+        #target-date {
             font-size: 1.5rem;
-            margin-top: 10px;
         }
 
         #countdown span {
             font-size: 0.8em;
         }
 
-        #target-date {
-            font-size: 1rem; 
-            margin-top: 5px;
+        #credit {
+            font-size: 0.7rem;
         }
 
         #background-image {
-            display: none;
+            opacity: 0.3;
+        }
+
+        body {
+            overflow-x: hidden;
         }
     }
 
+    #gallery {
+        position: fixed;
+        bottom: 20px;
+        padding: 20px;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .gallery-image {
+        max-width: 100px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .gallery-image:hover {
+        transform: scale(1.05);
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        overflow: hidden;
+    }
+
+    .modal-content {
+        margin: auto;
+        display: block;
+        max-width: 90%;
+        max-height: 90vh;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .close {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 1001;
+    }
+
+    .close:hover {
+        color: #bbb;
+    }
+
+    @media (max-width: 768px) {
+        .gallery-image {
+            max-width: 100px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .gallery-image {
+            max-width: 100px;
+        }
+    }
+
+    @media (max-width: 320px) {
+        .gallery-image {
+            max-width: 100px;
+        }
+    }
 </style>
 </head>
 <body>
@@ -129,18 +226,39 @@ h1,
     <div id="countdown"></div>
     <div id="target-date">para...</div>
 </div>
-<a id="qr-codigo" href="info.html" target="_blank"><img src="qr.png" alt="qr-codigo"></a>
 <img id="background-image" src="fondoo.png">
-<div id="credit">Por Iñaki Barreda y Santiago Beasley 1º MD</div>
+<div id="gallery">
+    <img src="info.jpg" alt="Información" class="gallery-image" onclick="openModal()">
+</div>
+<div id="modal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modal-img">
+</div>
+<div id="credit">IÑAKI BARREDA 2°MD 2025</div>
 
 <script>
-    var countDownDate = new Date("Sep 29, 2024 00:00:00").getTime();
+    var countDownDate = new Date("Sep 29, 2025 00:00:00").getTime();
 
     var x = setInterval(function() {
 
-        var now = new Date().getTime();
-
-        var distance = countDownDate - now;
+        var now = new Date();
+        var currentMonth = now.getMonth();
+        var currentDate = now.getDate();
+        
+        // Check if today is September 29th
+        if (currentMonth === 8 && currentDate === 29) { // Month is 0-based, so 8 = September
+            document.getElementById("countdown").innerHTML = "HOY ES EL CUMPLEAÑOS DE LA ESCUELA";
+            return;
+        }
+        
+        // Calculate next September 29th
+        var year = now.getFullYear();
+        if (currentMonth > 8 || (currentMonth === 8 && currentDate > 29)) {
+            year++; // If we've passed Sept 29 this year, target next year
+        }
+        
+        var countDownDate = new Date(year, 8, 29, 0, 0, 0).getTime();
+        var distance = countDownDate - now.getTime();
 
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -149,13 +267,24 @@ h1,
 
         document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
         + minutes + "m <span>" + seconds + "s</span>";
-
-        if (distance < 0) {
-            clearInterval(x);
-            document.getElementById("countdown").innerHTML = "Ya pasó!";
-        }
     }, 1000);
+
+    // Modal functionality
+    function openModal() {
+        document.getElementById('modal').style.display = 'block';
+        document.getElementById('modal-img').src = 'info.jpg';
+    }
+
+    function closeModal() {
+        document.getElementById('modal').style.display = 'none';
+    }
+
+    // Close modal when clicking outside the image
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('modal')) {
+            closeModal();
+        }
+    }
 </script>
 </body>
 </html>
-<!--Perdon si les duele los ojos a los devs ver este codigo todo feo, pero mientras sea funcional no se lo va a tocar-->
